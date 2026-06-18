@@ -14,7 +14,7 @@ public class StockPositionsService(StockPositionsRepository stockRepository,Stoc
         return stockPosition;
     }
 
-    public async Task<StockPosition> AddStockPosition(int stockId,decimal quantity,int userId)
+    public async Task<StockPosition> AddStockPosition(int stockId,decimal quantity,decimal purchasePrice,int userId)
     {
         var stock = await _stockService.GetStockById(stockId);
         var user = await userService.GetUserById(userId);
@@ -28,7 +28,7 @@ public class StockPositionsService(StockPositionsRepository stockRepository,Stoc
             UserId = userId,
             StockId = stockId,
             Quantity = quantity,
-            PurchasePrice = (decimal)stock.Price,
+            PurchasePrice = purchasePrice,
             PurchaseDate = DateTime.UtcNow,
             Stock = stock,
             User = user

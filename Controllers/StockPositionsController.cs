@@ -23,7 +23,7 @@ public class StockPositionsController(StockPositionsService stockPositionsServic
     public async Task<ActionResult<StockPosition>> AddStockPosition([FromBody]CreateStockPositionDto dto)
     {
         int userId = 1;
-        var stockPosition = await _stockPositionsService.AddStockPosition(dto.StockId, dto.Quantity, userId);
+        var stockPosition = await _stockPositionsService.AddStockPosition(dto.StockId, dto.Quantity,dto.PurchasePrice, userId);
         if (stockPosition != null)
         {
             return stockPosition;
