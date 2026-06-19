@@ -20,4 +20,13 @@ public class StockPositionsRepository(ApiContext apiContext)
         
         return  stockPosition;
     }
+
+    public async Task<List<StockPosition>> GetPositionsByTicker(string ticker,int userId)
+    {
+        var stocks = await _apiContext.stockPositions
+            .Where(s => s.Stock.Ticker == ticker)
+            .Where(s => s.UserId == userId)
+            .ToListAsync();
+        return stocks;
+    }
 }

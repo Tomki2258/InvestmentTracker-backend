@@ -36,4 +36,10 @@ public class StockPositionsService(StockPositionsRepository stockRepository,Stoc
         await _stockRepository.AddStockPosition(stockPositon);
         return stockPositon;
     }
+
+    public async Task<List<StockPosition>> GetPositionsByStock(string ticker,int userId)
+    {
+        var stocks = await _stockRepository.GetPositionsByTicker(ticker,userId);
+        return stocks;
+    }
 }
