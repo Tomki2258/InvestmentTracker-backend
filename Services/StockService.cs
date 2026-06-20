@@ -65,4 +65,10 @@ public class StockService(StockRepository repository, ILogger<StockService> logg
         
         return result;
     }
+
+    public async Task<decimal> GetStockPrice(string ticker)
+    {
+        var stock = await _stockRepository.GetStockByTicker(ticker);
+        return stock.Price;
+    }
 }

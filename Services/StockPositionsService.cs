@@ -1,16 +1,17 @@
 using InvestmentTracker_backend.Models;
 using InvestmentTracker_backend.Repositories;
+using InvestmentTracker_backend.Results;
 
 namespace InvestmentTracker_backend.Services;
 
-public class StockPositionsService(StockPositionsRepository stockRepository,StockService stockService,UserService userService)
+public class StockPositionsService(StockPositionsRepository stockPositionsRepository,StockService stockService,UserService userService)
 {
-    private readonly StockPositionsRepository _stockRepository = stockRepository;
+    private readonly StockPositionsRepository _stockPositionsRepository = stockPositionsRepository;
     private readonly StockService _stockService = stockService;
     private readonly UserService _userService = userService;
     public async Task<StockPosition> GetStockPositionById(int id)
     {
-        var stockPosition = await _stockRepository.GetStockPositionById(id);
+        var stockPosition = await _stockPositionsRepository.GetStockPositionById(id);
         return stockPosition;
     }
 
@@ -33,13 +34,52 @@ public class StockPositionsService(StockPositionsRepository stockRepository,Stoc
             Stock = stock,
             User = user
         };
-        await _stockRepository.AddStockPosition(stockPositon);
+        await _stockPositionsRepository.AddStockPosition(stockPositon);
         return stockPositon;
     }
 
     public async Task<List<StockPosition>> GetPositionsByStock(string ticker,int userId)
     {
-        var stocks = await _stockRepository.GetPositionsByTicker(ticker,userId);
+        var stocks = await _stockPositionsRepository.GetPositionsByTicker(ticker,userId);
         return stocks;
+    }
+
+    public async Task<decimal> GetStockPositionAvg(string ticker, int userId)
+    {
+        var stocks = await _stockPositionsRepository.GetPositionsByTicker(ticker, userId);
+        return GetStockPositionAvg(stocks);
+    }
+
+    private decimal GetStockPositionAvg(List<StockPosition> stocks)
+    {
+        if (stocks == null || !stocks.Any())
+        {
+            return 0;
+        }
+        var totalQuantity = stocks.Sum(s => s.Quantity);
+        if (totalQuantity == 0) 
+        {
+            return 0;
+        }
+
+        var totalCost = stocks.Sum(s => s.Quantity * s.PurchasePrice);
+    
+        return totalCost / totalQuantity;
+    }
+    public async Task<StockProfitResult> GetProfit(string ticker, int userId)
+    {
+        var stocks = await _stockPositionsRepository.GetPositionsByTicker(ticker,userId);
+        var avgPrice = GetStockPositionAvg(stocks);
+        var currentPrice = await _stockService.GetStockPrice(ticker);
+
+        var stocksCount = stocks.Sum(s => s.Quantity);
+        var profit = Math.Round(currentPrice * stocksCount - avgPrice * stocksCount,2);
+        var profitPercent = Math.Round((currentPrice - avgPrice) / avgPrice * 100,2);
+        
+        return new StockProfitResult()
+        {
+            profit =  profit,
+            profitPercent = profitPercent
+        };
     }
 }

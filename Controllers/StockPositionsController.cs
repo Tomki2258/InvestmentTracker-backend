@@ -1,5 +1,6 @@
 using InvestmentTracker_backend.Dtos;
 using InvestmentTracker_backend.Models;
+using InvestmentTracker_backend.Results;
 using InvestmentTracker_backend.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +12,7 @@ public class StockPositionsController(StockPositionsService stockPositionsServic
 {
     private readonly StockPositionsService _stockPositionsService = stockPositionsService;
 
-    [HttpGet]
+    [HttpGet("positions")]
     public async Task<ActionResult<List<StockPosition>>> GetStockPositions([FromQuery] string? ticker)
     {
         int userId = 1;
@@ -33,7 +34,7 @@ public class StockPositionsController(StockPositionsService stockPositionsServic
         return Ok(stockPosition);
     }
     
-    [HttpPost] 
+    [HttpPost("add")] 
     public async Task<ActionResult<StockPosition>> AddStockPosition([FromBody] CreateStockPositionDto dto)
     {
         int userId = 1;
@@ -45,5 +46,21 @@ public class StockPositionsController(StockPositionsService stockPositionsServic
         }
 
         return BadRequest("Failed to add stock position"); 
+    }
+
+    [HttpGet("avg")]
+    public async Task<ActionResult<decimal>> AvgBuyPrice(string ticker)
+    {
+        int userId = 1;
+        var avgPrice = await _stockPositionsService.GetStockPositionAvg(ticker, userId);
+        return Ok(avgPrice);
+    }
+
+    [HttpGet("profit")]
+    public async Task<ActionResult<StockProfitResult>> GetProfit(string ticker)
+    {
+        int userId = 1;
+        var profit = await _stockPositionsService.GetProfit(ticker, userId);
+        return Ok(profit);
     }
 }
