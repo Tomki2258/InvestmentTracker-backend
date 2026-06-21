@@ -1,0 +1,4 @@
+$kind: collection
+name: AuthController
+variables:
+  jwt_token: ""

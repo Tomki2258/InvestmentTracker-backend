@@ -1,0 +1,21 @@
+$kind: http-request
+name: Login
+url: https://localhost:7286/login
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "email": "tomek@tomek.pl",
+      "password": "Tomek"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      const response = pm.response.json();
+      if (response.token) {
+          pm.collectionVariables.set("jwt_token", response.token);
+          console.log(response.token)
+      }
+    language: text/javascript
+order: 1781962561588
