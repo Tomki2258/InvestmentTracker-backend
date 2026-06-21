@@ -1,10 +1,11 @@
 using InvestmentTracker_backend.Models;
 using InvestmentTracker_backend.Repositories;
 using InvestmentTracker_backend.Results;
+using InvestmentTracker_backend.Services.Interfaces;
 
 namespace InvestmentTracker_backend.Services;
 
-public class StockPositionsService(StockPositionsRepository stockPositionsRepository,StockService stockService,UserService userService)
+public class StockPositionsService(StockPositionsRepository stockPositionsRepository,StockService stockService,UserService userService) : IStockPositionsService
 {
     private readonly StockPositionsRepository _stockPositionsRepository = stockPositionsRepository;
     private readonly StockService _stockService = stockService;
@@ -50,7 +51,7 @@ public class StockPositionsService(StockPositionsRepository stockPositionsReposi
         return GetStockPositionAvg(stocks);
     }
 
-    private decimal GetStockPositionAvg(List<StockPosition> stocks)
+    public decimal GetStockPositionAvg(List<StockPosition> stocks)
     {
         if (stocks == null || !stocks.Any())
         {
