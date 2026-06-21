@@ -2,6 +2,7 @@ using InvestmentTracker_backend.Dtos;
 using InvestmentTracker_backend.Models;
 using InvestmentTracker_backend.Results;
 using InvestmentTracker_backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvestmentTracker_backend.Controllers;
@@ -11,16 +12,20 @@ namespace InvestmentTracker_backend.Controllers;
 public class StockPositionsController(StockPositionsService stockPositionsService) : ControllerBase
 {
     private readonly StockPositionsService _stockPositionsService = stockPositionsService;
-
+    [Authorize]
     [HttpGet("positions")]
     public async Task<ActionResult<List<StockPosition>>> GetStockPositions([FromQuery] string? ticker)
     {
         int userId = 1;
         
         var stocks = await _stockPositionsService.GetPositionsByStock(ticker, userId);
+        if (stocks.Count == 0)
+        {
+            return NotFound();
+        }
         return Ok(stocks);
     }
-
+    [Authorize]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<StockPosition>> GetStockPositionById(int id)
     {
@@ -33,7 +38,7 @@ public class StockPositionsController(StockPositionsService stockPositionsServic
         
         return Ok(stockPosition);
     }
-    
+    [Authorize]
     [HttpPost("add")] 
     public async Task<ActionResult<StockPosition>> AddStockPosition([FromBody] CreateStockPositionDto dto)
     {
@@ -47,7 +52,7 @@ public class StockPositionsController(StockPositionsService stockPositionsServic
 
         return BadRequest("Failed to add stock position"); 
     }
-
+    [Authorize]
     [HttpGet("avg")]
     public async Task<ActionResult<decimal>> AvgBuyPrice(string ticker)
     {
@@ -55,7 +60,7 @@ public class StockPositionsController(StockPositionsService stockPositionsServic
         var avgPrice = await _stockPositionsService.GetStockPositionAvg(ticker, userId);
         return Ok(avgPrice);
     }
-
+    [Authorize]
     [HttpGet("profit")]
     public async Task<ActionResult<StockProfitResult>> GetProfit(string ticker)
     {

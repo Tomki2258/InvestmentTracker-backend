@@ -15,7 +15,7 @@ public class StockService(StockRepository repository, ILogger<StockService> logg
         var stock = await _stockRepository.GetStockById(id);
         return stock;
     }
-    public async Task<Stock?> GetStockByTicker(string ticker)
+    public async Task<Stock> GetStockByTicker(string ticker)
     {
         var stock = await _stockRepository.GetStockByTicker(ticker);
         

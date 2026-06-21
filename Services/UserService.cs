@@ -12,4 +12,21 @@ public class UserService(UsersRepository usersRepository)
         Console.WriteLine($"Szuka po id {id}");
         return await _usersRepository.GetUserById(id);
     }
+
+    public async Task<int> IsValid(string email, string password)
+    {
+        var user = await _usersRepository.IsUserValid(email, password);
+        if (user != null)
+        {
+            return user.Id;
+        }
+
+        return -1;
+    }
+
+    public async Task<User?> GetUserByEmail(string email)
+    {
+        var user = await _usersRepository.GetUserByEmail(email);
+        return user;
+    }
 }
