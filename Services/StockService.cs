@@ -1,14 +1,14 @@
 using InvestmentTracker_backend.Models;
 using InvestmentTracker_backend.Repositories;
+using InvestmentTracker_backend.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using YahooFinanceApi;
 
 namespace InvestmentTracker_backend.Services;
 
-public class StockService(StockRepository repository, ILogger<StockService> logger)
+public class StockService(StockRepository repository) : IStockService
 {
     private readonly StockRepository _stockRepository = repository;
-    private readonly ILogger<StockService> _logger = logger;
 
     public async Task<Stock?> GetStockById(int id)
     {

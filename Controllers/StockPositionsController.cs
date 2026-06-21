@@ -2,6 +2,7 @@ using InvestmentTracker_backend.Dtos;
 using InvestmentTracker_backend.Models;
 using InvestmentTracker_backend.Results;
 using InvestmentTracker_backend.Services;
+using InvestmentTracker_backend.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +10,9 @@ namespace InvestmentTracker_backend.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class StockPositionsController(StockPositionsService stockPositionsService) : ControllerBase
+public class StockPositionsController(IStockPositionsService stockPositionsService) : ControllerBase
 {
-    private readonly StockPositionsService _stockPositionsService = stockPositionsService;
+    private readonly IStockPositionsService _stockPositionsService = stockPositionsService;
     [Authorize]
     [HttpGet("positions")]
     public async Task<ActionResult<List<StockPosition>>> GetStockPositions([FromQuery] string? ticker)
