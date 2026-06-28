@@ -25,6 +25,9 @@ builder.Services.AddScoped<UsersRepository>();
 builder.Services.AddScoped<StockPositionsRepository>();
 builder.Services.AddScoped<StockPositionsService>();
 
+builder.Services.AddScoped<DividendRepository>();
+builder.Services.AddScoped<DividendService>();
+
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -29,4 +29,20 @@ public class UserService(UsersRepository usersRepository)
         var user = await _usersRepository.GetUserByEmail(email);
         return user;
     }
+
+    public async Task<bool> AddUser(string name,string surname, string email, string password)
+    {
+        var userCheck = await GetUserByEmail(email);
+        if (userCheck != null)
+            return false;
+        var user = new User
+        {
+            Name = name,
+            Surname = surname,
+            Email = email,
+            Password = password
+        };
+        await _usersRepository.AddUser(user);
+        return true;
+    }   
 }
