@@ -27,4 +27,11 @@ public class UsersRepository(ApiContext apiContext)
     {
         return await apiContext.users.FirstOrDefaultAsync(u => u.Email.Equals(email));
     }
+
+    public async Task<bool> AddUser(User user)
+    {
+        await _apiContext.AddAsync(user);
+        await apiContext.SaveChangesAsync();
+        return true;
+    }
 }

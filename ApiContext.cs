@@ -12,6 +12,7 @@ public class ApiContext : DbContext
     public DbSet<Stock> stocks { get; set; }
     public DbSet<User> users { get; set; }
     public DbSet<StockPosition>  stockPositions { get; set; }
+    public DbSet<Dividend> dividends { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
