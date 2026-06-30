@@ -4,7 +4,9 @@ using InvestmentTracker_backend.Repositories;
 using InvestmentTracker_backend.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer; // 👈 Musisz to dodać
-using Microsoft.IdentityModel.Tokens;   
+using Microsoft.IdentityModel.Tokens;
+using YahooFinanceApi;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -27,6 +29,7 @@ builder.Services.AddScoped<StockPositionsService>();
 
 builder.Services.AddScoped<DividendRepository>();
 builder.Services.AddScoped<DividendService>();
+builder.Services.AddScoped<IDividendProvider, YahooDividendProvider>();
 
 builder.Services.AddAuthentication(options =>
     {

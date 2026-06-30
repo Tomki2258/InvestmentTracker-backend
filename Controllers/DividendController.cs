@@ -11,9 +11,9 @@ public class DividendController(DividendService dividendService) : ControllerBas
     private readonly DividendService dividendService = dividendService;
 
     [HttpGet]
-    public async Task<ActionResult<List<Dividend>>> Get()
+    public async Task<ActionResult<List<Dividend>>> Get(string ticker)
     {
-        var dividends = await dividendService.GetDividends("XTB.WA");
+        var dividends = await dividendService.GetDividends(ticker);
         
         return Ok(dividends);
     }
