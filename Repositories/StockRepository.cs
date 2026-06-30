@@ -23,10 +23,8 @@ public class StockRepository
     }
     public async Task<Stock> GetStockByTicker(string ticker)
     {
-        string normalizedTicker = ticker?.ToLower();
-    
         return await apiContext.stocks
-            .FirstOrDefaultAsync(s => s.Ticker.ToLower() == normalizedTicker);
+            .FirstOrDefaultAsync(s => s.Ticker == ticker);
     }
 
     public async Task<bool> SetStock(Stock stock)

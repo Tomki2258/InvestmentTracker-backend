@@ -9,8 +9,7 @@ public class DividendRepository(ApiContext apiContext)
 
     public async Task<List<Dividend>> GetDividendsByStock(int id)
     {
-        var dividends = await apiContext.dividends.Where(div => div.Id == id).ToListAsync();
-        
+        var dividends = await apiContext.dividends.Where(div => div.StockId == id).ToListAsync();
         return dividends;   
     }
 
