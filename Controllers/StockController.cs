@@ -22,6 +22,7 @@ public class StockController(StockService stockService) : ControllerBase
             Field.RegularMarketPrice];
         return price;
     }
+    [Authorize]
     [HttpGet("details/{ticker}")]
     public async Task<ActionResult<Stock>> GetStockByTicker(string ticker)
     {
