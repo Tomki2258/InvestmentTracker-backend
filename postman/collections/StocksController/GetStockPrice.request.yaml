@@ -1,0 +1,9 @@
+$kind: http-request
+name: GetStockPrice
+url: "{{base_ur}}Stock/price/XTB.WA"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt_token}}"
+order: 1782923825762

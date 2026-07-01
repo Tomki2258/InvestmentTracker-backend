@@ -9,18 +9,19 @@ public class UserService(UsersRepository usersRepository)
 
     public async Task<User?> GetUserById(int id)
     {
-        Console.WriteLine($"Szuka po id {id}");
         return await _usersRepository.GetUserById(id);
     }
 
-    public async Task<int> IsValid(string email, string password)
+    public async Task<int> Login(string email, string password)
     {
-        var user = await _usersRepository.IsUserValid(email, password);
-        if (user != null)
+        var user = await _usersRepository.GetUserByEmail(email);
+        if (user == null)
+            return -1;
+        var unHashedPassword = BCrypt.Net.BCrypt.Verify(password,user.Password);
+        if (unHashedPassword)
         {
             return user.Id;
         }
-
         return -1;
     }
 
@@ -35,12 +36,13 @@ public class UserService(UsersRepository usersRepository)
         var userCheck = await GetUserByEmail(email);
         if (userCheck != null)
             return false;
+        var hash = BCrypt.Net.BCrypt.HashPassword(password);
         var user = new User
         {
             Name = name,
             Surname = surname,
             Email = email,
-            Password = password
+            Password = hash
         };
         await _usersRepository.AddUser(user);
         return true;

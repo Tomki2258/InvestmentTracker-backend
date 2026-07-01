@@ -1,0 +1,11 @@
+$kind: http-request
+name: GetUserByEmail
+url: https://localhost:7286/User/email?email=tomek@tomek.pl
+method: GET
+queryParams:
+  email: tomek@tomek.pl
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt_token}}"
+order: 1782924111126
