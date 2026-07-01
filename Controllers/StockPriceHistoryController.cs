@@ -1,5 +1,6 @@
 using InvestmentTracker_backend.Models;
 using InvestmentTracker_backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvestmentTracker_backend.Controllers;
@@ -10,6 +11,7 @@ public class StockPriceHistoryController(StockPriceHistoryService stockPriceHist
 {
     private readonly StockPriceHistoryService _stockPriceHistoryService = stockPriceHistoryService;
 
+    [Authorize]
     [HttpGet("history")]
     public async Task<ActionResult<List<StockPriceHistory>>> GetStockPriceHistory(string ticker, DateTime startDate, DateTime endDate)
     {

@@ -7,10 +7,12 @@ public class StockPriceHistoryRepository(ApiContext apiContext)
 {
     private readonly ApiContext _apiContext = apiContext;
 
-    public Task<List<StockPriceHistory>> GetStockHistory(string ticker, DateTime startDate, DateTime endDate)
+    public async Task<List<StockPriceHistory>> GetStockHistory(string ticker, DateTime startDate, DateTime endDate)
     {
-        return _apiContext.stockPriceHistories
-            .Where(s => s.Ticker == ticker && s.Date > startDate && s.Date < endDate).ToListAsync();
+        var history = await _apiContext.stockPriceHistories
+            .Where(s => s.Ticker == ticker && s.Date > startDate.AddDays(-1) && s.Date < endDate).ToListAsync();
+        history.Sort((x, y) => DateTime.Compare(x.Date, y.Date));
+        return history;
     }
 
     public async Task<bool> AddStockHistory(List<StockPriceHistory> stockHistory)
