@@ -31,6 +31,8 @@ builder.Services.AddScoped<DividendRepository>();
 builder.Services.AddScoped<DividendService>();
 builder.Services.AddScoped<IDividendProvider, YahooDividendProvider>();
 
+builder.Services.AddScoped<StockPriceHistoryRepository>();
+builder.Services.AddScoped<StockPriceHistoryService>();
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
