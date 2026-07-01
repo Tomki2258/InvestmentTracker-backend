@@ -6,16 +6,21 @@ body:
   type: json
   content: |-
     {
-      "email": "tomek@tomek.pl",
-      "password": "Tomek"
+      "email": "tomek@proton.mail",
+      "password": "tomek"
     }
 scripts:
   - type: afterResponse
     code: |-
       const response = pm.response.json();
-      if (response.token) {
-          pm.collectionVariables.set("jwt_token", response.token);
-          console.log(response.token)
+
+      const token = response.token || response.Token;
+
+      if (token) {
+          pm.collectionVariables.set("jwt_token", token);
+          console.log("Token zapisany pomyślnie:", token);
+      } else {
+          console.error("Nie znaleziono tokenu w odpowiedzi! Struktura odpowiedzi:", response);
       }
     language: text/javascript
 order: 1781962561588

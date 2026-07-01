@@ -1,0 +1,4 @@
+name: jwt_token
+values:
+  - key: jwt_token
+    value: ''

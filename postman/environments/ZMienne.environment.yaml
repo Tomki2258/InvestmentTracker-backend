@@ -1,0 +1,6 @@
+name: ZMienne
+values:
+  - key: base_ur
+    value: ''
+  - key: jwt_token
+    value: ''

@@ -16,7 +16,7 @@ public class AuthController(IConfiguration config, UserService userService) : Co
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequestDto model)
     {
-        var userId = await _userService.IsValid(model.Email, model.Password);
+        var userId = await _userService.Login(model.Email, model.Password);
         if (userId == -1)
         {
             return Unauthorized();

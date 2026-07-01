@@ -1,0 +1,13 @@
+$kind: http-request
+name: https://localhost:7286/StockPriceHistory/history
+url: https://localhost:7286/StockPriceHistory/history?ticker=XTB.WA&startDate=2026-06-12T11:07:48Z&endDate=2026-06-15T11:07:48Z
+method: GET
+queryParams:
+  ticker: XTB.WA
+  startDate: 2026-06-12T11:07:48Z
+  endDate: 2026-06-15T11:07:48Z
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt_token}}"
+order: 1782924121139
