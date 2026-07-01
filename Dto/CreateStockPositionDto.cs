@@ -12,4 +12,6 @@ public class CreateStockPositionDto
     [Required]
     [Range(0, double.MaxValue)]
     public decimal PurchasePrice {get; set; }
+    [Required]
+    public int PortfolioId { get; set; }
 }

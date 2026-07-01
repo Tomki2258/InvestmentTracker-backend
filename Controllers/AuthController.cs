@@ -28,6 +28,7 @@ public class AuthController(IConfiguration config, UserService userService) : Co
 
         var claims = new[]
         {
+            new Claim(ClaimTypes.PrimarySid, userId.ToString()),
             new Claim(ClaimTypes.NameIdentifier, model.Email),
             new Claim(ClaimTypes.Role, "User")
         };

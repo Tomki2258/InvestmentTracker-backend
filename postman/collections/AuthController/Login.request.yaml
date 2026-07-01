@@ -12,15 +12,29 @@ body:
 scripts:
   - type: afterResponse
     code: |-
-      const response = pm.response.json();
+      let apiKey;
 
-      const token = response.token || response.Token;
+      try {
+          // 1. Próbujemy sparsować odpowiedź jako JSON
+          const response = pm.response.json();
+          // Szukamy klucza pod różnymi nazwami (zależnie od formatu DTO)
+          apiKey = response.apiKey || response.ApiKey || response.key || response.token || response;
+      } catch (e) {
+          // 2. Jeśli odpowiedź to surowy tekst, pobieramy go bezpośrednio
+          apiKey = pm.response.text();
+      }
 
-      if (token) {
-          pm.collectionVariables.set("jwt_token", token);
-          console.log("Token zapisany pomyślnie:", token);
+      // 3. Jeśli klucz jest stringiem, oczyszczamy go z cudzysłowów na początku i końcu
+      if (typeof apiKey === 'string') {
+          apiKey = apiKey.replace(/^"|"$/g, '');
+      }
+
+      // 4. Zapisujemy oczyszczony klucz do ZMIENNEJ ŚRODOWISKOWEJ (Environment)
+      if (apiKey) {
+          pm.environment.set("jwt_token", apiKey);
+          console.log("API Key został zapisany w środowisku pod nazwą jwt_token:", apiKey);
       } else {
-          console.error("Nie znaleziono tokenu w odpowiedzi! Struktura odpowiedzi:", response);
+          console.error("Nie udało się pobrać API Key z odpowiedzi serwera.");
       }
     language: text/javascript
 order: 1781962561588

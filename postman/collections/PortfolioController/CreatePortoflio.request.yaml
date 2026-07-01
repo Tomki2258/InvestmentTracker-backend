@@ -1,0 +1,12 @@
+$kind: http-request
+name: CreatePortoflio
+url: "{{base_ur}}api/Portfolio/new?name=Portfolio_1"
+method: POST
+queryParams:
+  - key: name
+    value: Portfolio_1
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt_token}}"
+order: 3114373551898739

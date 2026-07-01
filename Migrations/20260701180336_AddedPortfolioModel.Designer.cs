@@ -3,6 +3,7 @@ using System;
 using InvestmentTracker_backend;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InvestmentTracker_backend.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    partial class ApiContextModelSnapshot : ModelSnapshot
+    [Migration("20260701180336_AddedPortfolioModel")]
+    partial class AddedPortfolioModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,9 +105,6 @@ namespace InvestmentTracker_backend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("PortfolioId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("PurchaseDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -117,11 +117,14 @@ namespace InvestmentTracker_backend.Migrations
                     b.Property<int>("StockId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("PortfolioId");
-
                     b.HasIndex("StockId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("stockPositions");
                 });
@@ -191,21 +194,21 @@ namespace InvestmentTracker_backend.Migrations
 
             modelBuilder.Entity("InvestmentTracker_backend.Models.StockPosition", b =>
                 {
-                    b.HasOne("InvestmentTracker_backend.Models.Portfolio", "portfolio")
-                        .WithMany()
-                        .HasForeignKey("PortfolioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("InvestmentTracker_backend.Models.Stock", "Stock")
                         .WithMany()
                         .HasForeignKey("StockId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("InvestmentTracker_backend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Stock");
 
-                    b.Navigation("portfolio");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

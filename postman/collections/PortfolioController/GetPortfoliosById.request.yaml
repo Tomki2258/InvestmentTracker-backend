@@ -1,0 +1,12 @@
+$kind: http-request
+name: GetPortfoliosById
+url: "{{base_ur}}api/Portfolio/byId?portfolioId=1"
+method: GET
+queryParams:
+  - key: portfolioId
+    value: "1"
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt_token}}"
+order: 772875303994268

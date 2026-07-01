@@ -1,0 +1,9 @@
+$kind: http-request
+name: GetPortfolios
+url: "{{base_ur}}api/Portfolio/"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt_token}}"
+order: 1782929834324

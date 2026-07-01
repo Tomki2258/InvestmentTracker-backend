@@ -14,14 +14,15 @@ public class ApiContext : DbContext
     public DbSet<StockPosition>  stockPositions { get; set; }
     public DbSet<Dividend> dividends { get; set; }
     public DbSet<StockPriceHistory> stockPriceHistories { get; set; }
+    public DbSet<Portfolio> portfolios { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<StockPosition>()
-            .HasOne(sp => sp.User)
+            .HasOne(sp => sp.portfolio)
             .WithMany()
-            .HasForeignKey(sp => sp.UserId)
+            .HasForeignKey(sp => sp.PortfolioId)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<StockPosition>()

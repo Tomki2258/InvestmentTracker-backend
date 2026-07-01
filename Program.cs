@@ -2,6 +2,7 @@ using System.Text;
 using InvestmentTracker_backend;
 using InvestmentTracker_backend.Repositories;
 using InvestmentTracker_backend.Services;
+using InvestmentTracker_backend.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer; // 👈 Musisz to dodać
 using Microsoft.IdentityModel.Tokens;
@@ -25,7 +26,7 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<UsersRepository>();
 
 builder.Services.AddScoped<StockPositionsRepository>();
-builder.Services.AddScoped<StockPositionsService>();
+builder.Services.AddScoped<IStockPositionsService,StockPositionsService>();
 
 builder.Services.AddScoped<DividendRepository>();
 builder.Services.AddScoped<DividendService>();
@@ -33,6 +34,9 @@ builder.Services.AddScoped<IDividendProvider, YahooDividendProvider>();
 
 builder.Services.AddScoped<StockPriceHistoryRepository>();
 builder.Services.AddScoped<StockPriceHistoryService>();
+
+builder.Services.AddScoped<PortfolioRepository>();
+builder.Services.AddScoped<PortfolioService>();
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

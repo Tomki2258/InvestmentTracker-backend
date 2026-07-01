@@ -25,7 +25,7 @@ public class StockPositionsRepository(ApiContext apiContext)
     {
         var stocks = await _apiContext.stockPositions
             .Where(s => s.Stock.Ticker == ticker)
-            .Where(s => s.UserId == userId)
+            .Where(s => s.PortfolioId == userId)
             .ToListAsync();
         return stocks;
     }

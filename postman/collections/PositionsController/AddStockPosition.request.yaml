@@ -1,0 +1,18 @@
+$kind: http-request
+name: AddStockPosition
+url: "{{base_ur}}StockPositions/add"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "stockId": 1,
+      "quantity": 1,
+      "purchasePrice": 109,
+      "portfolioId": 1
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt_token}}"
+order: 1782930830022

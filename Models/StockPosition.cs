@@ -10,10 +10,10 @@ public class StockPosition
     public int Id { get; set; }
 
     [Required]
-    public int UserId { get; set; }
+    public int PortfolioId { get; set; }
     
-    [ForeignKey(nameof(UserId))]
-    public User User { get; set; } = null!;
+    [ForeignKey(nameof(PortfolioId))]
+    public Portfolio portfolio { get; set; } = null!;
     [Required]
     public int StockId { get; set; }
     

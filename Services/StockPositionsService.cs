@@ -5,35 +5,35 @@ using InvestmentTracker_backend.Services.Interfaces;
 
 namespace InvestmentTracker_backend.Services;
 
-public class StockPositionsService(StockPositionsRepository stockPositionsRepository,StockService stockService,UserService userService) : IStockPositionsService
+public class StockPositionsService(PortfolioService portfolioService,StockPositionsRepository stockPositionsRepository,StockService stockService,UserService userService) : IStockPositionsService
 {
     private readonly StockPositionsRepository _stockPositionsRepository = stockPositionsRepository;
     private readonly StockService _stockService = stockService;
-    private readonly UserService _userService = userService;
+    private readonly PortfolioService _portfolioService = portfolioService;
     public async Task<StockPosition> GetStockPositionById(int id)
     {
         var stockPosition = await _stockPositionsRepository.GetStockPositionById(id);
         return stockPosition;
     }
 
-    public async Task<StockPosition> AddStockPosition(int stockId,decimal quantity,decimal purchasePrice,int userId)
+    public async Task<StockPosition> AddStockPosition(int stockId,decimal quantity,decimal purchasePrice,int portfolioId)
     {
         var stock = await _stockService.GetStockById(stockId);
-        var user = await userService.GetUserById(userId);
-
-        if (stock == null || user == null)
+        var portfolio = await _portfolioService.GetPortfolioById(portfolioId);
+        
+        if (stock == null ||  portfolio == null)
         {
             return null;
         }
         var stockPositon = new StockPosition()
         {
-            UserId = userId,
+            PortfolioId = portfolioId,
             StockId = stockId,
             Quantity = quantity,
             PurchasePrice = purchasePrice,
             PurchaseDate = DateTime.UtcNow,
             Stock = stock,
-            User = user
+            portfolio = portfolio
         };
         await _stockPositionsRepository.AddStockPosition(stockPositon);
         return stockPositon;

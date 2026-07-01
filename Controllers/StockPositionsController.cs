@@ -44,7 +44,7 @@ public class StockPositionsController(IStockPositionsService stockPositionsServi
     public async Task<ActionResult<StockPosition>> AddStockPosition([FromBody] CreateStockPositionDto dto)
     {
         int userId = 1;
-        var stockPosition = await _stockPositionsService.AddStockPosition(dto.StockId, dto.Quantity, dto.PurchasePrice, userId);
+        var stockPosition = await _stockPositionsService.AddStockPosition(dto.StockId, dto.Quantity, dto.PurchasePrice, dto.PortfolioId);
     
         if (stockPosition != null)
         {
