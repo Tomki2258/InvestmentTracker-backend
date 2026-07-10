@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
@@ -7,7 +7,8 @@
         <RootNamespace>InvestmentTracker_backend</RootNamespace>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <AllowMissingPrunePackageData>true</AllowMissingPrunePackageData>
-    </PropertyGroup>
+      <UserSecretsId>f177bd91-9bc0-41fe-825a-69722ff5f8c4</UserSecretsId>
+  </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
