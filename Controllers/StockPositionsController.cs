@@ -69,4 +69,13 @@ public class StockPositionsController(IStockPositionsService stockPositionsServi
         var profit = await _stockPositionsService.GetProfit(ticker, userId);
         return Ok(profit);
     }
+
+    [Authorize]
+    [HttpGet("porftolioProfit")]
+    public async Task<decimal> GetProfitByPortfolio(string portfolioName)
+    {
+        var userClam = User.FindFirst(System.Security.Claims.ClaimTypes.PrimarySid);
+        var userId = Convert.ToInt32(userClam.Value);
+        return await _stockPositionsService.GetPortolioProfit(userId,portfolioName);
+    }
 }

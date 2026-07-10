@@ -15,6 +15,7 @@ public class StockPositionsService(PortfolioService portfolioService,StockPositi
         var stockPosition = await _stockPositionsRepository.GetStockPositionById(id);
         return stockPosition;
     }
+    
 
     public async Task<StockPosition> AddStockPosition(int stockId,decimal quantity,decimal purchasePrice,int portfolioId)
     {
@@ -70,8 +71,14 @@ public class StockPositionsService(PortfolioService portfolioService,StockPositi
     public async Task<StockProfitResult> GetProfit(string ticker, int userId)
     {
         var stocks = await _stockPositionsRepository.GetPositionsByTicker(ticker,userId);
+        var profitResult = await GetStockProfitResult(stocks);
+        return profitResult;
+    }
+
+    private async Task<StockProfitResult> GetStockProfitResult(List<StockPosition> stocks)
+    {
         var avgPrice = GetStockPositionAvg(stocks);
-        var currentPrice = await _stockService.GetStockPrice(ticker);
+        var currentPrice = await _stockService.GetStockPrice(stocks[0].Stock.Ticker);
 
         var stocksCount = stocks.Sum(s => s.Quantity);
         var profit = Math.Round(currentPrice * stocksCount - avgPrice * stocksCount,2);
@@ -79,8 +86,30 @@ public class StockPositionsService(PortfolioService portfolioService,StockPositi
         
         return new StockProfitResult()
         {
+            ticker = stocks[0].Stock.Ticker,
             profit =  profit,
             profitPercent = profitPercent
         };
+    }
+    public async Task<List<StockPosition>> GetPositionsByPortfolio(int portfolioId)
+    {
+        return await _stockPositionsRepository.GetPositionsByPortfolio(portfolioId);
+    }
+
+    public async Task<decimal> GetPortolioProfit(int userId, string portfolioName)
+    {
+        var portfolios = await _portfolioService.GetAll(userId);
+        var portfolio = portfolios.Find(s => s.Name == portfolioName);
+        
+        var stocks = await GetPositionsByPortfolio(portfolio.Id);
+        var groupStocks = stocks.GroupBy(s=>s.Stock.Ticker);
+        decimal sumProfit = 0;
+        foreach (var stock in groupStocks)
+        {
+            var s = stock.ToList();
+            var profit = await GetStockProfitResult(s);
+            sumProfit += profit.profit;
+        }
+        return sumProfit;
     }
 }
