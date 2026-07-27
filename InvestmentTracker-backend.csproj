@@ -25,4 +25,8 @@
       <PackageReference Include="YahooFinanceApiNext" Version="2.3.11" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Results\" />
+    </ItemGroup>
+
 </Project>

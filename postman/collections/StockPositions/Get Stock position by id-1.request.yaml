@@ -1,0 +1,12 @@
+$kind: http-request
+name: Get Stock position by id
+description: ""
+url: "{{base_ur}}/StockPositions/positions?ticker=XTB.WA"
+method: GET
+queryParams:
+  ticker: XTB.WA
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt_token}}"
+order: 2724368439827904

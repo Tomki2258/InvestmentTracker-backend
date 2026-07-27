@@ -67,7 +67,7 @@ public class StockPositionsService(StockPositionsRepository stockPositionsReposi
     
         return totalCost / totalQuantity;
     }
-    public async Task<StockProfitResult> GetProfit(string ticker, int userId)
+    public async Task<StockProfitResponse> GetProfit(string ticker, int userId)
     {
         var stocks = await _stockPositionsRepository.GetPositionsByTicker(ticker,userId);
         var avgPrice = GetStockPositionAvg(stocks);
@@ -77,7 +77,7 @@ public class StockPositionsService(StockPositionsRepository stockPositionsReposi
         var profit = Math.Round(currentPrice * stocksCount - avgPrice * stocksCount,2);
         var profitPercent = Math.Round((currentPrice - avgPrice) / avgPrice * 100,2);
         
-        return new StockProfitResult()
+        return new StockProfitResponse()
         {
             profit =  profit,
             profitPercent = profitPercent

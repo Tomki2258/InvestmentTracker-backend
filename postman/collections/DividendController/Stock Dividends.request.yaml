@@ -1,0 +1,11 @@
+$kind: http-request
+description: ""
+url: "{{base_ur}}/Dividend?ticker=XTB.WA"
+method: GET
+queryParams:
+  ticker: XTB.WA
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt_token}}"
+order: 1785181136416

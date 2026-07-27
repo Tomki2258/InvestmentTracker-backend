@@ -1,0 +1,12 @@
+$kind: http-request
+name: Get position AVG
+description: ""
+url: "{{base_ur}}/StockPositions/avg?ticker=XTB.WA"
+method: GET
+queryParams:
+  ticker: XTB.WA
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt_token}}"
+order: 2300554939750902

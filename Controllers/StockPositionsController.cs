@@ -41,10 +41,10 @@ public class StockPositionsController(IStockPositionsService stockPositionsServi
     }
     [Authorize]
     [HttpPost("add")] 
-    public async Task<ActionResult<StockPosition>> AddStockPosition([FromBody] CreateStockPositionDto dto)
+    public async Task<ActionResult<StockPosition>> AddStockPosition([FromBody] CreateStockPositionRequest request)
     {
         int userId = 1;
-        var stockPosition = await _stockPositionsService.AddStockPosition(dto.StockId, dto.Quantity, dto.PurchasePrice, userId);
+        var stockPosition = await _stockPositionsService.AddStockPosition(request.StockId, request.Quantity, request.PurchasePrice, userId);
     
         if (stockPosition != null)
         {
@@ -63,7 +63,7 @@ public class StockPositionsController(IStockPositionsService stockPositionsServi
     }
     [Authorize]
     [HttpGet("profit")]
-    public async Task<ActionResult<StockProfitResult>> GetProfit(string ticker)
+    public async Task<ActionResult<StockProfitResponse>> GetProfit(string ticker)
     {
         int userId = 1;
         var profit = await _stockPositionsService.GetProfit(ticker, userId);

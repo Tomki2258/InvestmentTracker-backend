@@ -1,0 +1,15 @@
+$kind: http-request
+name: Stock details
+description: ""
+url: "{{base_ur}}/Stock/details?ticker=XTB.WA"
+method: GET
+queryParams:
+  - key: ticker
+    value: XTB.WA
+    disabled: false
+    description: ""
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt_token}}"
+order: 1932058016326760

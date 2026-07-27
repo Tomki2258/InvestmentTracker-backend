@@ -1,0 +1,18 @@
+$kind: http-request
+name: Add stock position
+description: ""
+url: "{{base_ur}}/StockPositions/positions"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "stockId": 0,
+      "quantity": 1.7976931348623157e+308,
+      "purchasePrice": 1.7976931348623157e+308
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt_token}}"
+order: 4493714065941778

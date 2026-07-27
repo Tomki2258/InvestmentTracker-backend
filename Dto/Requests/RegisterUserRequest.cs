@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InvestmentTracker_backend.Dtos;
 
-public class RegisterUserRequestDto
+public class RegisterUserRequest
 {
     [Required]
     public string Name { get; set; }

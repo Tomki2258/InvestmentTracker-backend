@@ -1,3 +1,4 @@
+using InvestmentTracker_backend.Dtos;
 using InvestmentTracker_backend.Models;
 using InvestmentTracker_backend.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -13,8 +14,8 @@ public class StockPriceHistoryController(StockPriceHistoryService stockPriceHist
 
     [Authorize]
     [HttpGet("history")]
-    public async Task<ActionResult<List<StockPriceHistory>>> GetStockPriceHistory(string ticker, DateTime startDate, DateTime endDate)
+    public async Task<ActionResult<List<StockPriceHistory>>> GetStockPriceHistory([FromQuery] GetStockPriceHistoryRequest request)
     {
-        return await _stockPriceHistoryService.GetStockHistory(ticker,startDate, endDate);
+        return await _stockPriceHistoryService.GetStockHistory(request.Ticker,request.EndDate, request.StartDate);
     }
 }

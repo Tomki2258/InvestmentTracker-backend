@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InvestmentTracker_backend.Dtos;
 
-public class CreateStockPositionDto
+public class CreateStockPositionRequest
 {
     [Required]
     public int StockId { get; set; }

@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{base_ur}}/StockPriceHistory/history?Ticker=XTB.WA&StartDate=2026-07-15T17:16:26.497Z&EndDate=2026-07-13T17:16:26.497Z"
+method: GET
+queryParams:
+  Ticker: XTB.WA
+  StartDate: 2026-07-15T17:16:26.497Z
+  EndDate: 2026-07-13T17:16:26.497Z
+body:
+  type: json
+  content: |-
+    [
+      {
+        "id": 0,
+        "ticker": "XTB.WA",
+        "date": "2026-07-27T17:16:26.497Z",
+        "price": 0
+      }
+    ]
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt_token}}"
+order: 1782924121139

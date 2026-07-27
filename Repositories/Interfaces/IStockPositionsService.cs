@@ -8,7 +8,7 @@ public interface IStockPositionsService
     public Task<decimal> GetStockPositionAvg(string  ticker, int userId);
     public Task<List<StockPosition>> GetPositionsByStock(string ticker, int userId);
 
-    public Task<StockProfitResult> GetProfit(string ticker, int userId);
+    public Task<StockProfitResponse> GetProfit(string ticker, int userId);
     public Task<StockPosition> AddStockPosition(int stockId, decimal quantity, decimal purchasePrice, int userId);
     public Task<StockPosition> GetStockPositionById(int id);
 

@@ -14,7 +14,7 @@ public class AuthController(IConfiguration config, UserService userService) : Co
     private readonly UserService _userService = userService;
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginRequestDto model)
+    public async Task<IActionResult> Login([FromBody] LoginRequest model)
     {
         var userId = await _userService.Login(model.Email, model.Password);
         if (userId == -1)
@@ -43,7 +43,7 @@ public class AuthController(IConfiguration config, UserService userService) : Co
     }
 
     [HttpPost("register")]
-    public async  Task<IActionResult> Register([FromBody] RegisterUserRequestDto model)
+    public async  Task<IActionResult> Register([FromBody] RegisterUserRequest model)
     {
         var r =await _userService.AddUser(model.Name, model.Surname, model.Email, model.Password);
         if (r)
