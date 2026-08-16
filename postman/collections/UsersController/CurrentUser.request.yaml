@@ -1,0 +1,9 @@
+$kind: http-request
+name: CurrentUser
+url: https://localhost:7286/User/current
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt_token}}"
+order: 1782924111126
