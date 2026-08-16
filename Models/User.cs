@@ -19,14 +19,15 @@ public class User
     [Required]
     public string Password { get; set; } = string.Empty;
 
-    public UserDto GetDto()
+    public UserDto? ToDto()
     {
         var dto = new UserDto()
         {
             Name = Name,
-            Surname = Surname,
             Email = Email,
+            Surname = Surname
         };
+        
         return dto;
     }
 }
