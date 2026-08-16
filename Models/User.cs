@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using InvestmentTracker_backend.Results;
 
 namespace InvestmentTracker_backend.Models;
 
@@ -17,4 +18,15 @@ public class User
     
     [Required]
     public string Password { get; set; } = string.Empty;
+
+    public UserDto GetDto()
+    {
+        var dto = new UserDto()
+        {
+            Name = Name,
+            Surname = Surname,
+            Email = Email,
+        };
+        return dto;
+    }
 }

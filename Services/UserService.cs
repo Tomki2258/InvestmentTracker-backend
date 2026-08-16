@@ -1,5 +1,6 @@
 using InvestmentTracker_backend.Models;
 using InvestmentTracker_backend.Repositories;
+using InvestmentTracker_backend.Results;
 
 namespace InvestmentTracker_backend.Services;
 
@@ -25,10 +26,11 @@ public class UserService(UsersRepository usersRepository)
         return -1;
     }
 
-    public async Task<User?> GetUserByEmail(string email)
+    public async Task<UserDto?> GetUserByEmail(string email)
     {
         var user = await _usersRepository.GetUserByEmail(email);
-        return user;
+        var userDto = user?.GetDto();
+        return userDto;
     }
 
     public async Task<bool> AddUser(string name,string surname, string email, string password)

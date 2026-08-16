@@ -1,4 +1,5 @@
 using InvestmentTracker_backend.Models;
+using InvestmentTracker_backend.Results;
 using InvestmentTracker_backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,7 @@ public class UserController(UserService userService) : ControllerBase
 
     [Authorize]
     [HttpGet("email")]
-    public async Task<ActionResult<User>> GetUserByEmail(string email)
+    public async Task<ActionResult<UserDto>> GetUserByEmail(string email)
     {
         var user = await _userService.GetUserByEmail(email);
         if (user == null)

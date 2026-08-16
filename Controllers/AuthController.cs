@@ -45,7 +45,7 @@ public class AuthController(IConfiguration config, UserService userService) : Co
     [HttpPost("register")]
     public async  Task<IActionResult> Register([FromBody] RegisterUserRequest model)
     {
-        var r =await _userService.AddUser(model.Name, model.Surname, model.Email, model.Password);
+        var r = await _userService.AddUser(model.Name, model.Surname, model.Email, model.Password);
         if (r)
         {
             return Ok();
